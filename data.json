@@ -1,0 +1,37 @@
+{
+  "users": [
+    {
+      "name": "Luis",
+      "lastName": "Rueda",
+      "title": "Mrs",
+      "photo": "https://www.svgrepo.com/show/384674/account-avatar-profile-user-11.svg",
+      "gender": "Male",
+      "email": "Leo1203@gmail.com",
+      "birthday": "12/09/1994",
+      "phone": "3225432377",
+      "id": "cea0"
+    },
+    {
+      "name": "Adriana",
+      "lastName": "Velez",
+      "title": "miss",
+      "photo": "https://w7.pngwing.com/pngs/4/736/png-transparent-female-avatar-girl-face-woman-user-flat-classy-users-icon.png",
+      "gender": "female",
+      "email": "adrianaV1@gmail.com",
+      "birthday": "17/01/2001",
+      "phone": "3217452221",
+      "id": "db09"
+    },
+    {
+      "name": "Leandro",
+      "lastName": "Navarrete",
+      "title": "mrs",
+      "photo": "https://media.licdn.com/dms/image/D4E35AQEA2rsq9vB4Ww/profile-framedphoto-shrink_400_400/0/1705334593411?e=1712602800&v=beta&t=-Ei8c0nxWRsbfuGXt1VyMg8mMMc3DIz7Sab9jXN-hG8",
+      "gender": "male",
+      "email": "leandro10161999@gmail.com",
+      "birthday": "16/10/1999",
+      "phone": "3225221333",
+      "id": "37cb"
+    }
+  ]
+}
