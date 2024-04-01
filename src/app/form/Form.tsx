@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { IconButton } from "@mui/material";
+import {
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ArticleIcon from "@mui/icons-material/Article";
-import UserDetail from "../UserDetail/UserDetail";
+import UserDetail from "../components/userdetail/UserDetail";
 
 export interface User {
   id: number;
@@ -45,6 +51,12 @@ function Form() {
 
   // Estado para controlar la apertura del diálogo de detalles del usuario
   const [openDetailDialog, setOpenDetailDialog] = useState(false);
+
+  // Estado para controlar la apertura del diálogo de confirmación de eliminación
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
+
+  // Estado para almacenar temporalmente el ID del usuario que se va a eliminar
+  const [userIdToDelete, setUserIdToDelete] = useState<number | null>(null);
 
   // Función para mostrar los detalles del usuario seleccionado
   const handleViewUserDetails = (user: User) => {
@@ -132,11 +144,20 @@ function Form() {
     }
   };
 
+  // Función para abrir el diálogo de confirmación de eliminación
+  const handleOpenDeleteConfirmation = (id: number) => {
+    setUserIdToDelete(id);
+    setOpenDeleteConfirmation(true);
+  };
+
   // Función para eliminar un usuario
-  const handleDeleteUser = async (id: number) => {
+  const handleDeleteUser = async () => {
     try {
-      await axios.delete(`${API_URL}/${id}`);
-      fetchData();
+      if (userIdToDelete) {
+        await axios.delete(`${API_URL}/${userIdToDelete}`);
+        setOpenDeleteConfirmation(false);
+        fetchData();
+      }
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -334,7 +355,9 @@ function Form() {
                         <IconButton onClick={() => handleEditUser(item.id)}>
                           <EditIcon sx={{ color: "rgb(59 130 246)" }} />
                         </IconButton>
-                        <IconButton onClick={() => handleDeleteUser(item.id)}>
+                        <IconButton
+                          onClick={() => handleOpenDeleteConfirmation(item.id)}
+                        >
                           <DeleteIcon sx={{ color: "rgb(59 130 246)" }} />
                         </IconButton>
                         <IconButton onClick={() => handleViewUserDetails(item)}>
@@ -360,6 +383,30 @@ function Form() {
           </div>
         </div>
       </div>
+      {/* Diálogo de confirmación de eliminación */}
+      <Dialog
+        open={openDeleteConfirmation}
+        onClose={() => setOpenDeleteConfirmation(false)}
+      >
+        <DialogTitle>Confirmación de eliminación</DialogTitle>
+        <DialogContent>
+          <p>¿Estás seguro de que quieres eliminar este usuario?</p>
+        </DialogContent>
+        <DialogActions>
+          <button
+            className="px-8 py-2 bg-blue-500 text-white hover:text-blue-500 hover:bg-white border-2 transition duration-500 border-blue-500 hover:border-blue-500 rounded-md"
+            onClick={handleDeleteUser}
+          >
+            Eliminar
+          </button>
+          <button
+            className="px-8 py-2 bg-red-500 text-white hover:text-red-500 hover:bg-white border-2 transition duration-500 border-red-500 hover:border-red-500 rounded-md"
+            onClick={() => setOpenDeleteConfirmation(false)}
+          >
+            Cancelar
+          </button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

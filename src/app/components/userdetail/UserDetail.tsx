@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { User } from "../form/Form";
+import { User } from "../../form/Form";
 
 interface UserDetailProps {
   open: boolean;
